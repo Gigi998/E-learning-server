@@ -13,14 +13,21 @@ const handleLogin = async ({ body: { email, pwd } }: Request, res: Response) => 
   // Check match
   const match = await bcrypt.compare(pwd, user.pwd);
   if (match) {
+    // Find roles
+    const role = user.role;
     // Create accessToken and refresh token
     const accessToken = generateJWT({
-      email: user.email,
+      data: {
+        UserInfo: {
+          email: user.email,
+          role: role,
+        },
+      },
       tokenSecret: process.env.ACCESS_TOKEN_SECRET,
       tokenDuration: ACCESS_TOKEN_DURATION,
     });
     const refreshToken = generateJWT({
-      email: user.email,
+      data: { email: user.email },
       tokenSecret: process.env.REFRESH_TOKEN_SECRET,
       tokenDuration: REFRESH_TOKEN_DURATION,
     });
