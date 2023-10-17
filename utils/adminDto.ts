@@ -19,7 +19,7 @@ export interface VerifyJWT extends JWT {
 }
 
 export interface GenerateJWT extends JWT {
-  email: string;
+  data: any;
 }
 
 export enum UserFindersKey {

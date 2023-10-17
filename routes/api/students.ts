@@ -11,18 +11,32 @@ import {
 } from "../../controllers/students.controller";
 import { customValidator } from "../../utils/helpers";
 import { Validators } from "../../utils/validatorDto";
+import verifyRoles from "../../middleware/verifyRoles";
+import { Roles } from "../../utils/types";
 
 router
   .route("/")
-  .get(getAllStudents)
+  .get(verifyRoles([Roles.ADMIN, Roles.TEACHER]), getAllStudents)
   .patch(customValidator(Validators.BODY, ["studentId", "bookId"]), updateStudentBook)
-  .post(customValidator(Validators.BODY, ["name", "email"]), addNewStudent)
-  .delete(customValidator(Validators.BODY, ["id"]), deleteStudent);
+  .post(
+    verifyRoles([Roles.ADMIN, Roles.TEACHER]),
+    customValidator(Validators.BODY, ["name", "email"]),
+    addNewStudent
+  )
+  .delete(
+    verifyRoles([Roles.ADMIN, Roles.TEACHER]),
+    customValidator(Validators.BODY, ["id"]),
+    deleteStudent
+  );
 
 router
   .route("/:id")
   .get(customValidator(Validators.PARAMS, ["id"]), getSingleStudent)
-  .patch(customValidator(Validators.PARAMS, ["id"]), removeBookFromStudent);
+  .patch(
+    verifyRoles([Roles.ADMIN, Roles.TEACHER]),
+    customValidator(Validators.PARAMS, ["id"]),
+    removeBookFromStudent
+  );
 
 router
   .route("/update/:id")
