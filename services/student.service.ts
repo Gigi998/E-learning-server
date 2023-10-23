@@ -1,8 +1,19 @@
 import prisma from "../prisma";
 import { StudentFindersKey, CreateStudent } from "../utils/studentDto";
 
-const getAllStudents = async () => {
-  return prisma.student.findMany();
+const getAllStudents = async (
+  orderColumn: string,
+  orderDirection: string,
+  take: number,
+  skip: number
+) => {
+  return await prisma.student.findMany({
+    orderBy: {
+      [orderColumn]: orderDirection,
+    },
+    skip,
+    take,
+  });
 };
 
 const getStudentby = async (finder: StudentFindersKey, value: any) => {

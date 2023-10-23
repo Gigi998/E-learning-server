@@ -6,3 +6,15 @@ export enum Roles {
   TEACHER = "TEACHER",
   STUDENT = "STUDENT",
 }
+
+export enum OrderDirection {
+  ASC = "asc",
+  DESC = "desc",
+}
+
+export interface PaginationQuery {
+  orderBy?: string;
+  orderDirection?: OrderDirection;
+  take?: string;
+  skip?: string;
+}
