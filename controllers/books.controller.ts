@@ -6,7 +6,7 @@ const getAllBooks = async ({ query }: { query: BooksQuery }, res: Response) => {
   const {
     orderBy = "title",
     orderDirection = "asc",
-    take = "6",
+    take = "10",
     skip = "0",
     isAvailable = "false",
   } = query;

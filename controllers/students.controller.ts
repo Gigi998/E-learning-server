@@ -10,7 +10,7 @@ const getAllStudents = async (
   const {
     orderBy = "name",
     orderDirection = "asc",
-    take = "6",
+    take = "10",
     skip = "0",
   } = query;
   const allStudents = await studentService.getAllStudents(
