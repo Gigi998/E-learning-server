@@ -1,16 +1,21 @@
 import prisma from "../prisma";
+import { availableFilter } from "./book/helpers";
 
-const getAllBooks = async (query: any) => {
-  if (Object.keys(query).length === 0) {
-    return prisma.book.findMany();
-  } else {
-    if (query.freeBooks === "true") {
-      return prisma.book.findMany({ where: { Student: { none: {} } } });
-    }
-    if (query.freeBooks === "false") {
-      return prisma.book.findMany();
-    }
-  }
+const getAllBooks = async (
+  orderColumn: string,
+  orderDirection: string,
+  take: number,
+  skip: number,
+  available: string
+) => {
+  return await prisma.book.findMany({
+    orderBy: {
+      [orderColumn]: orderDirection,
+    },
+    where: availableFilter(available),
+    skip,
+    take,
+  });
 };
 
 const addNewBook = async (title: string) => {
