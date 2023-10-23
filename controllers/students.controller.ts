@@ -4,7 +4,7 @@ import { StudentFindersKey } from "../utils/studentDto";
 import { PaginationQuery } from "../utils/types";
 
 const getAllStudents = async ({ query }: { query: PaginationQuery }, res: Response) => {
-  const { orderBy = "name", orderDirection = "asc", take = "10", skip = "0" } = query;
+  const { orderBy = "name", orderDirection = "asc", take = "6", skip = "0" } = query;
   const allStudents = await studentService.getAllStudents(orderBy, orderDirection, +take, +skip);
   if (!allStudents) return res.status(204).json({ message: "No students in db" });
   return res.status(201).json(allStudents);
